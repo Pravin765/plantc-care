@@ -41,6 +41,7 @@
     <div id="hint">Place one leaf inside the box</div>
   </div>
   <div id="status">Loading...</div>
+  <div style="text-align:center;font-size:.75rem;color:#888">Supported plants: Tomato, Potato, Apple, Grape, Corn, Bell Pepper, Peach, Cherry, Strawberry, Soybean, Squash, Orange, Blueberry, Raspberry, Aloe, Cactus, Snake Plant, Spider Plant, Money Plant</div>
   <div id="dbg" style="text-align:center;font-size:.8rem;color:#888"></div>
   <div class="row">
     <button id="start">Start camera</button>
@@ -62,7 +63,8 @@
 <script>
 const $ = id => document.getElementById(id);
 const v = $('v'), c = $('c'), ctx = c.getContext('2d');
-const THRESH = 0.70, N = 5, EVERY = 600;
+const THRESH = 0.85, N = 5, EVERY = 600;
+const GAP = 0.20;
 let labels = [], buf = [], frozen = false, busy = false, running = false, calls = 0;
 
 const status = t => { $('status').textContent = t; };
@@ -83,11 +85,11 @@ async function predict() {
 function showResult(avg) {
   const idx = avg.map((p, i) => i).sort((a, b) => avg[b] - avg[a]);
   const top = idx[0];
-  const low = avg[top] < THRESH;
+  const low = avg[top] < THRESH || (avg[top] - avg[idx[1]]) < GAP;
   const L = labels[top] || { plant: '?', disease: '?', healthy: false };
-  $('plant').textContent = L.plant;
-  $('disease').textContent = L.healthy ? 'No disease detected' : L.disease;
-  $('chip').textContent = low ? 'Low confidence' : (L.healthy ? 'Healthy' : 'Diseased');
+  $('plant').textContent = low ? 'Not sure' : L.plant;
+  $('disease').textContent = low ? ('Best guess: ' + L.plant + ' ' + L.disease) : (L.healthy ? 'No disease detected' : L.disease);
+  $('chip').textContent = low ? 'Not sure' : (L.healthy ? 'Healthy' : 'Diseased');
   $('chip').style.background = low ? '#757575' : (L.healthy ? 'var(--ok)' : 'var(--bad)');
   const pct = Math.round(avg[top] * 100);
   $('fill').style.width = pct + '%';
@@ -100,7 +102,7 @@ function showResult(avg) {
     $('top3').appendChild(li);
   });
   $('card').hidden = false;
-  status(low ? 'Low confidence: move closer, hold the leaf flat, avoid shadows.' : '');
+  status(low ? 'Not sure. Use one supported leaf, fill the box, good light.' : '');
 }
 
 function smooth(scores) {
