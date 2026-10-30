@@ -83,16 +83,12 @@ async function predict() {
 function showResult(avg) {
   const idx = avg.map((p, i) => i).sort((a, b) => avg[b] - avg[a]);
   const top = idx[0];
-  if (avg[top] < THRESH) {
-    hideCard();
-    status('Retake photo: move closer, hold the leaf flat, avoid shadows.');
-    return;
-  }
+  const low = avg[top] < THRESH;
   const L = labels[top] || { plant: '?', disease: '?', healthy: false };
   $('plant').textContent = L.plant;
   $('disease').textContent = L.disease;
-  $('chip').textContent = L.healthy ? 'Healthy' : 'Diseased';
-  $('chip').style.background = L.healthy ? 'var(--ok)' : 'var(--bad)';
+  $('chip').textContent = low ? 'Low confidence' : (L.healthy ? 'Healthy' : 'Diseased');
+  $('chip').style.background = low ? '#757575' : (L.healthy ? 'var(--ok)' : 'var(--bad)');
   const pct = Math.round(avg[top] * 100);
   $('fill').style.width = pct + '%';
   $('pct').textContent = pct + '% confidence';
@@ -104,7 +100,7 @@ function showResult(avg) {
     $('top3').appendChild(li);
   });
   $('card').hidden = false;
-  status('');
+  status(low ? 'Low confidence: move closer, hold the leaf flat, avoid shadows.' : '');
 }
 
 function smooth(scores) {
