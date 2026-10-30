@@ -1,0 +1,24 @@
+{
+  "test_images": 16697,
+  "accuracy": 0.9804156435287776,
+  "top3_accuracy": 0.9975444690662993,
+  "macro_f1": 0.9835331391496674,
+  "weighted_f1": 0.9804345892804046,
+  "per_source": {
+    "indoor_detection": {
+      "images": 3019,
+      "accuracy": 0.9201722424643922,
+      "macro_f1": 0.9603292403887314
+    },
+    "new_plant_diseases": {
+      "images": 5919,
+      "accuracy": 0.992735259334347,
+      "macro_f1": 0.9361751097090444
+    },
+    "plantvillage": {
+      "images": 7759,
+      "accuracy": 0.9944580487176182,
+      "macro_f1": 0.9924067738783012
+    }
+  }
+}

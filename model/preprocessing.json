@@ -1,0 +1,11 @@
+{
+  "input": "RGB image, float32 pixel values in [0, 255] (the model normalizes internally; do NOT divide by 255)",
+  "resize": "resize the shorter side to 256px, centre-crop to 256x256, then centre-crop to 224x224",
+  "input_shape": [
+    1,
+    224,
+    224,
+    3
+  ],
+  "output": "softmax probabilities over 54 classes, in the order of classes.json"
+}

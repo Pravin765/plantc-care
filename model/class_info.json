@@ -1,0 +1,380 @@
+[
+  {
+    "label": "aloe_anthracnose",
+    "plant": "Aloe",
+    "disease": "Anthracnose",
+    "is_healthy": false,
+    "display_name": "Aloe - Anthracnose"
+  },
+  {
+    "label": "aloe_healthy",
+    "plant": "Aloe",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Aloe - Healthy"
+  },
+  {
+    "label": "aloe_leafspot",
+    "plant": "Aloe",
+    "disease": "Leaf Spot",
+    "is_healthy": false,
+    "display_name": "Aloe - Leaf Spot"
+  },
+  {
+    "label": "aloe_rust",
+    "plant": "Aloe",
+    "disease": "Rust",
+    "is_healthy": false,
+    "display_name": "Aloe - Rust"
+  },
+  {
+    "label": "aloe_sunburn",
+    "plant": "Aloe",
+    "disease": "Sunburn",
+    "is_healthy": false,
+    "display_name": "Aloe - Sunburn"
+  },
+  {
+    "label": "apple_apple_scab",
+    "plant": "Apple",
+    "disease": "Scab",
+    "is_healthy": false,
+    "display_name": "Apple - Scab"
+  },
+  {
+    "label": "apple_black_rot",
+    "plant": "Apple",
+    "disease": "Black Rot",
+    "is_healthy": false,
+    "display_name": "Apple - Black Rot"
+  },
+  {
+    "label": "apple_cedar_apple_rust",
+    "plant": "Apple",
+    "disease": "Cedar Apple Rust",
+    "is_healthy": false,
+    "display_name": "Apple - Cedar Apple Rust"
+  },
+  {
+    "label": "apple_healthy",
+    "plant": "Apple",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Apple - Healthy"
+  },
+  {
+    "label": "blueberry_healthy",
+    "plant": "Blueberry",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Blueberry - Healthy"
+  },
+  {
+    "label": "cactus_dactylopius_opuntia",
+    "plant": "Cactus",
+    "disease": "Dactylopius Opuntia (Cochineal)",
+    "is_healthy": false,
+    "display_name": "Cactus - Dactylopius Opuntia (Cochineal)"
+  },
+  {
+    "label": "cactus_healthy",
+    "plant": "Cactus",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Cactus - Healthy"
+  },
+  {
+    "label": "cherry_including_sour_healthy",
+    "plant": "Cherry",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Cherry - Healthy"
+  },
+  {
+    "label": "cherry_including_sour_powdery_mildew",
+    "plant": "Cherry",
+    "disease": "Powdery Mildew",
+    "is_healthy": false,
+    "display_name": "Cherry - Powdery Mildew"
+  },
+  {
+    "label": "corn_maize_cercospora_leaf_spot_gray_leaf_spot",
+    "plant": "Corn (Maize)",
+    "disease": "Cercospora Leaf Spot (Gray Leaf Spot)",
+    "is_healthy": false,
+    "display_name": "Corn (Maize) - Cercospora Leaf Spot (Gray Leaf Spot)"
+  },
+  {
+    "label": "corn_maize_common_rust",
+    "plant": "Corn (Maize)",
+    "disease": "Common Rust",
+    "is_healthy": false,
+    "display_name": "Corn (Maize) - Common Rust"
+  },
+  {
+    "label": "corn_maize_healthy",
+    "plant": "Corn (Maize)",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Corn (Maize) - Healthy"
+  },
+  {
+    "label": "corn_maize_northern_leaf_blight",
+    "plant": "Corn (Maize)",
+    "disease": "Northern Leaf Blight",
+    "is_healthy": false,
+    "display_name": "Corn (Maize) - Northern Leaf Blight"
+  },
+  {
+    "label": "grape_black_rot",
+    "plant": "Grape",
+    "disease": "Black Rot",
+    "is_healthy": false,
+    "display_name": "Grape - Black Rot"
+  },
+  {
+    "label": "grape_esca_black_measles",
+    "plant": "Grape",
+    "disease": "Esca (Black Measles)",
+    "is_healthy": false,
+    "display_name": "Grape - Esca (Black Measles)"
+  },
+  {
+    "label": "grape_healthy",
+    "plant": "Grape",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Grape - Healthy"
+  },
+  {
+    "label": "grape_leaf_blight_isariopsis_leaf_spot",
+    "plant": "Grape",
+    "disease": "Leaf Blight (Isariopsis Leaf Spot)",
+    "is_healthy": false,
+    "display_name": "Grape - Leaf Blight (Isariopsis Leaf Spot)"
+  },
+  {
+    "label": "money_plant_bacterial_wilt_disease",
+    "plant": "Money Plant",
+    "disease": "Bacterial Wilt Disease",
+    "is_healthy": false,
+    "display_name": "Money Plant - Bacterial Wilt Disease"
+  },
+  {
+    "label": "money_plant_healthy",
+    "plant": "Money Plant",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Money Plant - Healthy"
+  },
+  {
+    "label": "money_plant_manganese_toxicity",
+    "plant": "Money Plant",
+    "disease": "Manganese Toxicity",
+    "is_healthy": false,
+    "display_name": "Money Plant - Manganese Toxicity"
+  },
+  {
+    "label": "orange_haunglongbing_citrus_greening",
+    "plant": "Orange",
+    "disease": "Huanglongbing (Citrus Greening)",
+    "is_healthy": false,
+    "display_name": "Orange - Huanglongbing (Citrus Greening)"
+  },
+  {
+    "label": "peach_bacterial_spot",
+    "plant": "Peach",
+    "disease": "Bacterial Spot",
+    "is_healthy": false,
+    "display_name": "Peach - Bacterial Spot"
+  },
+  {
+    "label": "peach_healthy",
+    "plant": "Peach",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Peach - Healthy"
+  },
+  {
+    "label": "pepper_bell_bacterial_spot",
+    "plant": "Bell Pepper",
+    "disease": "Bacterial Spot",
+    "is_healthy": false,
+    "display_name": "Bell Pepper - Bacterial Spot"
+  },
+  {
+    "label": "pepper_bell_healthy",
+    "plant": "Bell Pepper",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Bell Pepper - Healthy"
+  },
+  {
+    "label": "potato_early_blight",
+    "plant": "Potato",
+    "disease": "Early Blight",
+    "is_healthy": false,
+    "display_name": "Potato - Early Blight"
+  },
+  {
+    "label": "potato_healthy",
+    "plant": "Potato",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Potato - Healthy"
+  },
+  {
+    "label": "potato_late_blight",
+    "plant": "Potato",
+    "disease": "Late Blight",
+    "is_healthy": false,
+    "display_name": "Potato - Late Blight"
+  },
+  {
+    "label": "raspberry_healthy",
+    "plant": "Raspberry",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Raspberry - Healthy"
+  },
+  {
+    "label": "snake_plant_anthracnose",
+    "plant": "Snake Plant",
+    "disease": "Anthracnose",
+    "is_healthy": false,
+    "display_name": "Snake Plant - Anthracnose"
+  },
+  {
+    "label": "snake_plant_healthy",
+    "plant": "Snake Plant",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Snake Plant - Healthy"
+  },
+  {
+    "label": "snake_plant_leaf_withering",
+    "plant": "Snake Plant",
+    "disease": "Leaf Withering",
+    "is_healthy": false,
+    "display_name": "Snake Plant - Leaf Withering"
+  },
+  {
+    "label": "soybean_healthy",
+    "plant": "Soybean",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Soybean - Healthy"
+  },
+  {
+    "label": "spider_plant_fungal_leaf_spot",
+    "plant": "Spider Plant",
+    "disease": "Fungal Leaf Spot",
+    "is_healthy": false,
+    "display_name": "Spider Plant - Fungal Leaf Spot"
+  },
+  {
+    "label": "spider_plant_healthy",
+    "plant": "Spider Plant",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Spider Plant - Healthy"
+  },
+  {
+    "label": "spider_plant_leaf_tip_necrosis",
+    "plant": "Spider Plant",
+    "disease": "Leaf Tip Necrosis",
+    "is_healthy": false,
+    "display_name": "Spider Plant - Leaf Tip Necrosis"
+  },
+  {
+    "label": "squash_powdery_mildew",
+    "plant": "Squash",
+    "disease": "Powdery Mildew",
+    "is_healthy": false,
+    "display_name": "Squash - Powdery Mildew"
+  },
+  {
+    "label": "strawberry_healthy",
+    "plant": "Strawberry",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Strawberry - Healthy"
+  },
+  {
+    "label": "strawberry_leaf_scorch",
+    "plant": "Strawberry",
+    "disease": "Leaf Scorch",
+    "is_healthy": false,
+    "display_name": "Strawberry - Leaf Scorch"
+  },
+  {
+    "label": "tomato_bacterial_spot",
+    "plant": "Tomato",
+    "disease": "Bacterial Spot",
+    "is_healthy": false,
+    "display_name": "Tomato - Bacterial Spot"
+  },
+  {
+    "label": "tomato_early_blight",
+    "plant": "Tomato",
+    "disease": "Early Blight",
+    "is_healthy": false,
+    "display_name": "Tomato - Early Blight"
+  },
+  {
+    "label": "tomato_healthy",
+    "plant": "Tomato",
+    "disease": "Healthy",
+    "is_healthy": true,
+    "display_name": "Tomato - Healthy"
+  },
+  {
+    "label": "tomato_late_blight",
+    "plant": "Tomato",
+    "disease": "Late Blight",
+    "is_healthy": false,
+    "display_name": "Tomato - Late Blight"
+  },
+  {
+    "label": "tomato_leaf_mold",
+    "plant": "Tomato",
+    "disease": "Leaf Mold",
+    "is_healthy": false,
+    "display_name": "Tomato - Leaf Mold"
+  },
+  {
+    "label": "tomato_septoria_leaf_spot",
+    "plant": "Tomato",
+    "disease": "Septoria Leaf Spot",
+    "is_healthy": false,
+    "display_name": "Tomato - Septoria Leaf Spot"
+  },
+  {
+    "label": "tomato_spider_mites_two_spotted_spider_mite",
+    "plant": "Tomato",
+    "disease": "Spider Mites (Two-Spotted Spider Mite)",
+    "is_healthy": false,
+    "display_name": "Tomato - Spider Mites (Two-Spotted Spider Mite)"
+  },
+  {
+    "label": "tomato_target_spot",
+    "plant": "Tomato",
+    "disease": "Target Spot",
+    "is_healthy": false,
+    "display_name": "Tomato - Target Spot"
+  },
+  {
+    "label": "tomato_tomato_mosaic_virus",
+    "plant": "Tomato",
+    "disease": "Mosaic Virus",
+    "is_healthy": false,
+    "display_name": "Tomato - Mosaic Virus"
+  },
+  {
+    "label": "tomato_tomato_yellow_leaf_curl_virus",
+    "plant": "Tomato",
+    "disease": "Yellow Leaf Curl Virus",
+    "is_healthy": false,
+    "display_name": "Tomato - Yellow Leaf Curl Virus"
+  }
+]

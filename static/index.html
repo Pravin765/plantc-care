@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leaf Disease Scanner</title>
+<style>
+  :root { --bg:#f4f7f2; --card:#fff; --text:#1c2b1c; --muted:#5d6b5d; --ok:#2e7d32; --bad:#c62828; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#121712; --card:#1d251d; --text:#e8f0e8; --muted:#9db09d; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); }
+  main { max-width:560px; margin:0 auto; padding:12px; }
+  h1 { font-size:1.2rem; margin:8px 0; }
+  #stage { position:relative; width:100%; aspect-ratio:3/4; background:#000; border-radius:14px; overflow:hidden; }
+  video { width:100%; height:100%; object-fit:cover; }
+  #box { position:absolute; left:15%; top:50%; transform:translateY(-50%); width:70%; aspect-ratio:1; border:3px solid #fff;
+         border-radius:14px; box-shadow:0 0 0 999px rgba(0,0,0,.45); pointer-events:none; }
+  #hint { position:absolute; bottom:10px; left:0; right:0; text-align:center; color:#fff; font-size:.9rem; }
+  #status { margin:10px 0; text-align:center; color:var(--muted); min-height:1.4em; }
+  .row { display:flex; gap:8px; margin:8px 0; }
+  button, .btn { flex:1; padding:14px; font-size:1rem; border:0; border-radius:10px; background:var(--ok);
+                 color:#fff; text-align:center; cursor:pointer; }
+  button.alt, .btn.alt { background:#546e7a; }
+  [hidden] { display:none !important; }
+  #card { background:var(--card); border-radius:14px; padding:14px; margin-top:10px; }
+  #plant { font-size:1.4rem; font-weight:700; }
+  #disease { color:var(--muted); margin:2px 0 8px; }
+  #chip { display:inline-block; padding:3px 10px; border-radius:99px; color:#fff; font-size:.85rem; }
+  .bar { height:10px; background:#cfd8cf; border-radius:6px; overflow:hidden; margin:10px 0 4px; }
+  #fill { height:100%; background:var(--ok); width:0; }
+  ul { padding-left:18px; margin:8px 0; color:var(--muted); }
+  small { color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Leaf Disease Scanner</h1>
+  <div id="stage">
+    <video id="v" playsinline muted></video>
+    <div id="box"></div>
+    <div id="hint">Place one leaf inside the box</div>
+  </div>
+  <div id="status">Loading...</div>
+  <div class="row">
+    <button id="start">Start camera</button>
+    <button id="freeze" class="alt" hidden>Freeze</button>
+    <label class="btn alt">Upload photo<input id="file" type="file" accept="image/*" hidden></label>
+  </div>
+  <div id="card" hidden>
+    <div id="plant"></div>
+    <div id="disease"></div>
+    <span id="chip"></span>
+    <div class="bar"><div id="fill"></div></div>
+    <div id="pct"></div>
+    <ul id="top3"></ul>
+    <small>Indicative result. Consult an agriculture expert.</small>
+  </div>
+</main>
+<canvas id="c" width="256" height="256" hidden></canvas>
+
+<script>
+const $ = id => document.getElementById(id);
+const v = $('v'), c = $('c'), ctx = c.getContext('2d');
+const THRESH = 0.70, N = 5, EVERY = 600;
+let labels = [], buf = [], frozen = false, busy = false, running = false;
+
+const status = t => { $('status').textContent = t; };
+const hideCard = () => { $('card').hidden = true; };
+
+// load labels, and warm up the server (free hosting may be asleep)
+fetch('/labels').then(r => r.json()).then(l => { labels = l; status('Ready. Tap "Start camera".'); })
+  .catch(() => status('Server is waking up or unreachable. Reload in a minute.'));
+
+async function predict() {
+  const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85));
+  const fd = new FormData(); fd.append('file', blob, 'leaf.jpg');
+  const r = await fetch('/predict', { method: 'POST', body: fd });
+  if (!r.ok) throw new Error('predict failed');
+  return (await r.json()).scores;
+}
+
+function showResult(avg) {
+  const idx = avg.map((p, i) => i).sort((a, b) => avg[b] - avg[a]);
+  const top = idx[0];
+  if (avg[top] < THRESH) {
+    hideCard();
+    status('Retake photo: move closer, hold the leaf flat, avoid shadows.');
+    return;
+  }
+  const L = labels[top] || { plant: '?', disease: '?', healthy: false };
+  $('plant').textContent = L.plant;
+  $('disease').textContent = L.disease;
+  $('chip').textContent = L.healthy ? 'Healthy' : 'Diseased';
+  $('chip').style.background = L.healthy ? 'var(--ok)' : 'var(--bad)';
+  const pct = Math.round(avg[top] * 100);
+  $('fill').style.width = pct + '%';
+  $('pct').textContent = pct + '% confidence';
+  $('top3').innerHTML = '';
+  idx.slice(0, 3).forEach(i => {
+    const li = document.createElement('li');
+    const l = labels[i] || { plant: '?', disease: '?' };
+    li.textContent = l.plant + ': ' + l.disease + ' (' + Math.round(avg[i] * 100) + '%)';
+    $('top3').appendChild(li);
+  });
+  $('card').hidden = false;
+  status('');
+}
+
+function smooth(scores) {
+  buf.push(scores);
+  if (buf.length > N) buf.shift();
+  if (buf.length < N) { hideCard(); status('Scanning...'); return; }
+  const avg = scores.map((_, i) => buf.reduce((s, b) => s + b[i], 0) / buf.length);
+  showResult(avg);
+}
+
+// crop the guide box from the video, accounting for object-fit: cover
+function cropBox() {
+  const st = $('stage').getBoundingClientRect(), bx = $('box').getBoundingClientRect();
+  const vw = v.videoWidth, vh = v.videoHeight;
+  const scale = Math.max(st.width / vw, st.height / vh);
+  const ox = (vw * scale - st.width) / 2, oy = (vh * scale - st.height) / 2;
+  const sx = (bx.left - st.left + ox) / scale, sy = (bx.top - st.top + oy) / scale;
+  const side = bx.width / scale;
+  ctx.drawImage(v, sx, sy, side, side, 0, 0, 256, 256);
+}
+
+async function tick() {
+  if (!running || frozen || busy || !v.videoWidth || !labels.length) return;
+  busy = true;
+  try { cropBox(); smooth(await predict()); }
+  catch (e) { status('Connection problem. Retrying...'); }
+  finally { busy = false; }
+}
+
+$('start').onclick = async () => {
+  try {
+    const s = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' } }, audio: false });
+    v.srcObject = s; await v.play();
+    $('start').hidden = true; $('freeze').hidden = false;
+    running = true; buf = []; status('Scanning...');
+    setInterval(tick, EVERY);
+  } catch (e) {
+    status('Camera blocked or unavailable. Allow camera access and try again.');
+  }
+};
+
+$('freeze').onclick = () => {
+  frozen = !frozen;
+  $('freeze').textContent = frozen ? 'Resume' : 'Freeze';
+  if (!frozen) { buf = []; status('Scanning...'); }
+};
+
+$('file').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const bmp = await createImageBitmap(f);
+    const side = Math.min(bmp.width, bmp.height);
+    ctx.drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, 256, 256);
+    frozen = true; $('freeze').textContent = 'Resume';
+    status('Analyzing...');
+    showResult(await predict());
+  } catch (err) { status('Could not analyze that image.'); }
+  e.target.value = '';
+};
+</script>
+</body>
+</html>
