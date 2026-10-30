@@ -41,6 +41,7 @@
     <div id="hint">Place one leaf inside the box</div>
   </div>
   <div id="status">Loading...</div>
+  <div id="dbg" style="text-align:center;font-size:.8rem;color:#888"></div>
   <div class="row">
     <button id="start">Start camera</button>
     <button id="freeze" class="alt" hidden>Freeze</button>
@@ -62,7 +63,7 @@
 const $ = id => document.getElementById(id);
 const v = $('v'), c = $('c'), ctx = c.getContext('2d');
 const THRESH = 0.70, N = 5, EVERY = 600;
-let labels = [], buf = [], frozen = false, busy = false, running = false;
+let labels = [], buf = [], frozen = false, busy = false, running = false, calls = 0;
 
 const status = t => { $('status').textContent = t; };
 const hideCard = () => { $('card').hidden = true; };
@@ -128,7 +129,7 @@ function cropBox() {
 async function tick() {
   if (!running || frozen || busy || !v.videoWidth || !labels.length) return;
   busy = true;
-  try { cropBox(); smooth(await predict()); }
+  try { cropBox(); const sc = await predict(); const t = sc.indexOf(Math.max(...sc)); const L = labels[t] || {}; $('dbg').textContent = 'calls: ' + (++calls) + ' | top: ' + (L.plant||'?') + ' ' + (L.disease||'') + ' ' + Math.round(sc[t]*100) + '%'; smooth(sc); }
   catch (e) { status('Connection problem. Retrying...'); }
   finally { busy = false; }
 }
