@@ -86,7 +86,7 @@ function showResult(avg) {
   const low = avg[top] < THRESH;
   const L = labels[top] || { plant: '?', disease: '?', healthy: false };
   $('plant').textContent = L.plant;
-  $('disease').textContent = L.disease;
+  $('disease').textContent = L.healthy ? 'No disease detected' : L.disease;
   $('chip').textContent = low ? 'Low confidence' : (L.healthy ? 'Healthy' : 'Diseased');
   $('chip').style.background = low ? '#757575' : (L.healthy ? 'var(--ok)' : 'var(--bad)');
   const pct = Math.round(avg[top] * 100);
